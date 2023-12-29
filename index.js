@@ -18,6 +18,7 @@ const categoryRouter = require("./routes/categoriesRoutes");
 const productRouter = require("./routes/productRoutes");
 const careerBannerRouter = require("./routes/careerBannerRoutes");
 const careerFormRouter = require("./routes/careerFormRoutes");
+const newsEventRouter = require("./routes/newsEventRoute");
 
 const app = express();
 app.use(cors());
@@ -42,6 +43,7 @@ app.use("/category", categoryRouter);
 app.use("/product", productRouter);
 app.use("/careerBanners", careerBannerRouter);
 app.use("/careerForms", careerFormRouter);
+app.use("/news-events", newsEventRouter);
 
 app.get("/", (req, res) => {
   res.send(`Server is Running on port ${port}`);
