@@ -1,6 +1,6 @@
 const fs = require("fs");
 const slugify = require("slugify");
-const Categories = require("../models/categoriesModel");
+const SubSubCategories = require("../models/subSubCategoryModel");
 
 exports.addCategory = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ exports.addCategory = async (req, res) => {
       slug: slugify(name),
     };
 
-    const result = await Categories.create(category);
+    const result = await SubSubCategories.create(category);
 
     res.status(200).json({
       success: true,
@@ -28,7 +28,7 @@ exports.addCategory = async (req, res) => {
 
 exports.getCategories = async (req, res) => {
   try {
-    let categories = await Categories.find({}).sort({ order: 1 });
+    let categories = await SubSubCategories.find({})
 
     res.status(200).json({
       success: true,
@@ -47,7 +47,7 @@ exports.getCategory = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const category = await Categories.findOne({ _id: id });
+    const category = await SubSubCategories.findOne({ _id: id });
 
     res.status(200).json({
       success: true,
@@ -67,7 +67,7 @@ exports.updateCategory = async (req, res) => {
     const { id } = req?.params;
     const data = req?.body;
 
-    const category = await Categories.findById(id);
+    const category = await SubSubCategories.findById(id);
 
     if (!category) {
       res.status(404).json({
@@ -83,7 +83,7 @@ exports.updateCategory = async (req, res) => {
       slug,
     };
 
-    const result = await Categories.findByIdAndUpdate(id, newData, {
+    const result = await SubSubCategories.findByIdAndUpdate(id, newData, {
       new: true,
     });
 
@@ -104,7 +104,7 @@ exports.deleteCategory = async (req, res) => {
   try {
     const { id } = req?.params;
 
-    const category = await Categories.findById(id);
+    const category = await SubSubCategories.findById(id);
     if (!category) {
       res.status(404).json({
         success: false,
@@ -112,7 +112,7 @@ exports.deleteCategory = async (req, res) => {
       });
     }
 
-    await Categories.findByIdAndDelete(id);
+    await SubSubCategories.findByIdAndDelete(id);
 
     res.status(200).json({
       success: true,
