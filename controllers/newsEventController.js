@@ -1,5 +1,7 @@
 const fs = require("fs");
 const NewsEvent = require("../models/newsEventModel");
+const { pick } = require("../utils/pick");
+const { calculatePagination } = require("../utils/calculatePagination");
 
 exports.createNewsEvent = async (req, res) => {
   const image = req?.file?.filename;
@@ -27,8 +29,25 @@ exports.createNewsEvent = async (req, res) => {
 };
 
 exports.getNewsEvents = async (req, res) => {
+  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const filters = pick(req.query, ["category"]);
+
+  const { category } = filters;
+  const { page, limit, skip } = calculatePagination(paginationOptions);
+
   try {
-    const result = await NewsEvent.find();
+    const andCondition = [];
+
+    if (category) {
+      andCondition.push({ category: category });
+    }
+
+    const whereCondition =
+      andCondition.length > 0 ? { $and: andCondition } : {};
+
+    const result = await NewsEvent.find(whereCondition).skip(skip).limit(limit);
+
+    const total = await NewsEvent.countDocuments(whereCondition);
 
     if (!result) {
       return res.status(404).json({
@@ -41,6 +60,11 @@ exports.getNewsEvents = async (req, res) => {
       success: true,
       message: "NewsEvents fetched successfully",
       data: result,
+      meta: {
+        total,
+        page,
+        limit,
+      },
     });
   } catch (err) {
     res.status(500).json({
@@ -142,7 +166,7 @@ exports.deleteNewsEventById = async (req, red) => {
         console.log(err);
       }
     });
-    
+
     await NewsEvent.findByIdAndDelete(id);
 
     res.status(200).json({
