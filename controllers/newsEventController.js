@@ -2,6 +2,7 @@ const fs = require("fs");
 const NewsEvent = require("../models/newsEventModel");
 const { pick } = require("../utils/pick");
 const { calculatePagination } = require("../utils/calculatePagination");
+const Slugify = require("slugify");
 
 exports.createNewsEvent = async (req, res) => {
   const image = req?.file?.filename;
@@ -10,6 +11,7 @@ exports.createNewsEvent = async (req, res) => {
   const newData = {
     ...data,
     image,
+    slug: Slugify(data?.title),
   };
 
   try {
@@ -89,10 +91,12 @@ exports.updateNewsEvent = async (req, res) => {
       });
     }
 
+    const slug = Slugify(data?.title);
+
     let newData;
 
     if (image) {
-      fs.unlink(`./uploads/newsEvent${isExist.image}`, (err) => {
+      fs.unlink(`./uploads/newsEvent/${isExist.image}`, (err) => {
         if (err) {
           console.log(err);
         }
@@ -101,9 +105,10 @@ exports.updateNewsEvent = async (req, res) => {
       newData = {
         ...data,
         image,
+        slug,
       };
     } else {
-      newData = { ...data };
+      newData = { ...data, slug };
     }
 
     const result = await NewsEvent.findByIdAndUpdate(id, newData, {
@@ -161,7 +166,7 @@ exports.deleteNewsEventById = async (req, red) => {
       });
     }
 
-    fs.unlink(`./uploads/newsEvent${isExist.image}`, (err) => {
+    fs.unlink(`./uploads/newsEvent/${isExist.image}`, (err) => {
       if (err) {
         console.log(err);
       }

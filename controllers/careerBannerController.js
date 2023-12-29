@@ -68,7 +68,7 @@ exports.updateCareerBanner = async (req, res) => {
     let newData;
 
     if (image) {
-      fs.unlink(`./uploads/careerBanner${isExist.image}`, (err) => {
+      fs.unlink(`./uploads/careerBanner/${isExist.image}`, (err) => {
         if (err) {
           console.log(err);
         }

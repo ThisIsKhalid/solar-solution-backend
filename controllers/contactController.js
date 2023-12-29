@@ -37,7 +37,7 @@ exports.updateContact = async (req, res) => {
         banner,
       };
     } else if (image) {
-      fs.unlink(`./uploads/services/image/${isServiceExists.image}`, (err) => {
+      fs.unlink(`./uploads/contactus/${contact.image}`, (err) => {
         if (err) {
           console.error(err);
           return;
@@ -48,12 +48,13 @@ exports.updateContact = async (req, res) => {
         image,
       };
     } else if (banner) {
-      fs.unlink(`./uploads/services/icon/${isServiceExists.icon}`, (err) => {
+      fs.unlink(`./uploads/contactus/${contact.banner}`, (err) => {
         if (err) {
           console.error(err);
           return;
         }
       });
+      
       newData = {
         ...data,
         banner,
