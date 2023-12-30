@@ -10,7 +10,7 @@ const router = require("express").Router();
 
 router.post("/add-impact", addImpact);
 
-router.get("/get-impacts", getImpacts);
+router.get("/", getImpacts);
 
 router.patch("/update-impact/:id", updateImpact);
 

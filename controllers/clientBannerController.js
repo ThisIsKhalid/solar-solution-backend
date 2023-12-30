@@ -48,23 +48,36 @@ exports.allClientBanners = async (req, res) => {
   }
 };
 
-exports.deleteClientBanner = async (req, res) => {
+exports.updateClientBanner = async (req, res) => {
+  const { id } = req?.params;
+  const image = req?.file?.filename;
+
+  if (!image) {
+    return res.status(400).json({
+      success: false,
+      error: "banner image is required",
+    });
+  }
+
   try {
-    const { id } = req?.params;
     const banner = await ClientBanner.findOne({ _id: id });
 
-    if (banner) {
+    if (image && banner) {
+      const data = {
+        image: image,
+      };
+
       fs.unlink(`./uploads/clientBanner/${banner.image}`, (err) => {
         if (err) {
           console.log(err);
         }
       });
 
-      await ClientBanner.findByIdAndDelete(id);
+      await ClientBanner.findByIdAndUpdate(id, data, { new: true });
 
       res.status(200).json({
         success: true,
-        message: "Delete success",
+        message: "UPdate success",
       });
     } else {
       res.status(400).json({

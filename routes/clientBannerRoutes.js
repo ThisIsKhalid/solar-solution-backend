@@ -4,7 +4,7 @@ const multer = require("multer");
 const {
   addClientBanner,
   allClientBanners,
-  deleteClientBanner,
+  updateClientBanner,
 } = require("../controllers/clientBannerController");
 
 const storage = multer.diskStorage({
@@ -19,6 +19,6 @@ const upload = multer({ storage: storage });
 
 router.post("/add", upload.single("image"), addClientBanner);
 router.get("/", allClientBanners);
-router.delete("/delete/:id", deleteClientBanner);
+router.patch("/update/:id", updateClientBanner);
 
 module.exports = router;

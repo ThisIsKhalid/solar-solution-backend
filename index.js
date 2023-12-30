@@ -56,11 +56,11 @@ app.use("/about", aboutRouter);
 app.use("/company-profile", companyProfileRouter);
 app.use("/our-mission", ourMissionRouter);
 app.use("/our-vision", ourVisionRouter);
-app.use("/our-team", ourTeamRouter);
+app.use("/team", ourTeamRouter);
 
-app.use("/category", categoryRouter);
-app.use("/sub-category", subCategoryRouter);
-app.use("/sub-sub-category", subSubCategoryRouter);
+app.use("/categories", categoryRouter);
+app.use("/sub-categories", subCategoryRouter);
+app.use("/sub-sub-categories", subSubCategoryRouter);
 app.use("/news-category", newsCategoryRouter);
 
 app.get("/", (req, res) => {
