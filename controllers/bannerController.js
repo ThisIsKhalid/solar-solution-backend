@@ -4,7 +4,6 @@ const Banner = require("../models/bannerModel");
 exports.addBanner = async (req, res) => {
   try {
     const image = req?.file?.filename;
-    const body = req?.body;
 
     if (!image) {
       return res.status(400).json({
@@ -15,7 +14,6 @@ exports.addBanner = async (req, res) => {
 
     const banner = {
       image: image,
-      order: body?.order,
     };
 
     const result = await Banner.create(banner);
@@ -35,7 +33,7 @@ exports.addBanner = async (req, res) => {
 
 exports.allBanners = async (req, res) => {
   try {
-    const banners = await Banner.find({}).sort({ order: 1 });
+    const banners = await Banner.find({});
 
     res.status(200).json({
       success: true,

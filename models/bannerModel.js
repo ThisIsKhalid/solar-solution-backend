@@ -6,10 +6,6 @@ const BannerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    order: {
-      type: Number,
-      required: true,
-    },
   },
   { timestamps: false }
 );

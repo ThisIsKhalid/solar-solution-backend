@@ -49,8 +49,9 @@ exports.allClientBanners = async (req, res) => {
 };
 
 exports.updateClientBanner = async (req, res) => {
-  const { id } = req?.params;
+  const id = req?.params?.id;
   const image = req?.file?.filename;
+  
 
   if (!image) {
     return res.status(400).json({

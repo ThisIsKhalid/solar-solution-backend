@@ -1,4 +1,5 @@
 const Contact = require("../models/contactModel");
+const fs = require("fs");
 
 exports.updateContact = async (req, res) => {
   const id = req?.params?.id;
@@ -19,6 +20,13 @@ exports.updateContact = async (req, res) => {
     let newData;
 
     if (image && banner) {
+
+      newData = {
+        ...data,
+        image: image,
+        banner: banner,
+      };
+
       fs.unlink(`./uploads/contactus/${contact?.image}`, (err) => {
         if (err) {
           console.error(err);
@@ -31,41 +39,39 @@ exports.updateContact = async (req, res) => {
         }
       });
 
-      newData = {
-        ...data,
-        image,
-        banner,
-      };
+      
     } else if (image) {
       fs.unlink(`./uploads/contactus/${contact.image}`, (err) => {
         if (err) {
           console.error(err);
-          return;
         }
       });
       newData = {
         ...data,
         image,
+        banner: contact.banner,
       };
     } else if (banner) {
       fs.unlink(`./uploads/contactus/${contact.banner}`, (err) => {
         if (err) {
           console.error(err);
-          return;
         }
       });
-      
+
       newData = {
         ...data,
         banner,
+        image: contact.image,
       };
     } else {
       newData = {
         ...data,
+        banner: contact.banner,
+        image: contact.image,
       };
     }
 
-    await Contact.findByIdAndUpdate(id, data, { new: true });
+    await Contact.findByIdAndUpdate(id, newData, { new: true });
 
     res.status(200).json({
       success: true,

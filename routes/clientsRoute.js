@@ -20,10 +20,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post("/add", upload.single("image"), addClient);
-router.get("/", allClients);
+router.get("/all", allClients);
 router.delete("/delete/:id", deleteClient);
 
 router.get("/:id", getClientById);
-router.patch("/:id", upload.single("image"), updateClient);
+router.patch("/update/:id", upload.single("image"), updateClient);
 
 module.exports = router;
