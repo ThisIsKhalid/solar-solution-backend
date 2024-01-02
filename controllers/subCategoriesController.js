@@ -60,7 +60,6 @@ exports.updateSubCategory = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Sub Category updated successfully",
-      data: result,
     });
   } catch (error) {
     res.status(400).json({
