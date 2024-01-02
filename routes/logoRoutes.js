@@ -25,6 +25,6 @@ router.patch(
   updateLogo
 );
 
-router.get("/", getLogos);
+router.get("/all", getLogos);
 
 module.exports = router;
