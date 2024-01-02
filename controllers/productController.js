@@ -64,7 +64,12 @@ exports.getAllProducts = async (req, res) => {
     const whereCondition =
       andCondition.length > 0 ? { $and: andCondition } : {};
 
-    const result = await Product.find(whereCondition).skip(skip).limit(limit);
+    const result = await Product.find(whereCondition)
+      .skip(skip)
+      .limit(limit)
+      .populate("category")
+      .populate("subCategory")
+      .populate("subSubCategory");
 
     const total = await Product.countDocuments(whereCondition);
 
@@ -90,7 +95,10 @@ exports.getProductById = async (req, res) => {
   const id = req?.params?.id;
 
   try {
-    const result = await Product.findById(id);
+    const result = await Product.findById(id)
+      .populate("category")
+      .populate("subCategory")
+      .populate("subSubCategory");
 
     if (!result) {
       return res.status(404).json({

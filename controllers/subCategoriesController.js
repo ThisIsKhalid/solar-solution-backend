@@ -130,9 +130,9 @@ exports.getSubCategory = async (req, res) => {
   try {
     const { id } = req.params;
 
-   const subCategory = await SubCategory.findOne({ _id: id }).populate(
-     "category"
-   );
+    const subCategory = await SubCategory.findOne({ _id: id })
+      .populate("category")
+      .populate("subSubCategories");
 
     res.status(200).json({
       success: true,

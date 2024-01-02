@@ -15,16 +15,17 @@ const productSchema = new mongoose.Schema({
     unique: true,
   },
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Categories",
     required: true,
   },
   subCategory: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "SubCategory",
   },
   subSubCategory: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "SubSubCategory",
   },
   description: {
     type: String,
