@@ -12,13 +12,19 @@ const subCategoriesSchema = new mongoose.Schema(
       unique: true,
     },
     category: {
-      type: String,
-      required: true,
+      type: mongoose.Types.ObjectId,
+      ref: "Categories",
     },
+    subSubCategories: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "SubSubCategory",
+      },
+    ],
   },
   { timestamps: false }
 );
 
-const SubCategories = mongoose.model("SubCategories", subCategoriesSchema);
+const SubCategory = mongoose.model("SubCategory", subCategoriesSchema);
 
-module.exports = SubCategories;
+module.exports = SubCategory;
