@@ -1,4 +1,4 @@
-const Impacts = require("../models/ImpactsModel");
+const Impacts = require("../models/impactsModel");
 
 exports.addImpact = async (req, res) => {
   try {
