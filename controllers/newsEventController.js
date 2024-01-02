@@ -134,7 +134,7 @@ exports.updateNewsEvent = async (req, res) => {
   }
 };
 
-exports.getNewsEventById = async (req, red) => {
+exports.getNewsEventById = async (req, res) => {
   const id = req?.params?.id;
 
   try {
@@ -153,7 +153,7 @@ exports.getNewsEventById = async (req, red) => {
   }
 };
 
-exports.deleteNewsEventById = async (req, red) => {
+exports.deleteNewsEventById = async (req, res) => {
   const id = req?.params?.id;
 
   try {
