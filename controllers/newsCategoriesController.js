@@ -8,7 +8,7 @@ exports.addCategory = async (req, res) => {
 
     const category = {
       ...req?.body,
-      slug: slugify(name),
+      slug: slugify(name).toLowerCase(),
     };
 
     const result = await NewsCategories.create(category);
@@ -76,7 +76,7 @@ exports.updateCategory = async (req, res) => {
       });
     }
 
-    const slug = slugify(data?.name);
+    const slug = slugify(data?.name).toLowerCase();
 
     const newData = {
       ...data,

@@ -11,7 +11,7 @@ exports.createNewsEvent = async (req, res) => {
   const newData = {
     ...data,
     image,
-    slug: Slugify(data?.title),
+    slug: Slugify(data?.title).toLowerCase(),
   };
 
   try {
@@ -91,7 +91,7 @@ exports.updateNewsEvent = async (req, res) => {
       });
     }
 
-    const slug = Slugify(data?.title);
+    const slug = Slugify(data?.title).toLowerCase();
 
     let newData;
 

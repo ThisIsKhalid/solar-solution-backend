@@ -9,7 +9,7 @@ exports.addSubSubCategory = async (req, res) => {
 
     const sub_subCategory = {
       name,
-      slug: slugify(`${name}-${Date.now()}`),
+      slug: slugify(`${name}-${Date.now()}`).toLowerCase(),
       category: categoryId,
       subCategory: subCategoryId,
     };
@@ -86,7 +86,7 @@ exports.updateSubSubCategory = async (req, res) => {
       });
     }
 
-    const slug = slugify(`${name}-${Date.now()}`);
+    const slug = slugify(`${name}-${Date.now()}`).toLowerCase();
 
     await SubSubCategory.updateOne({ _id: id }, { name: name, slug: slug });
 

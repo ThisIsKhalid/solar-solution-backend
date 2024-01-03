@@ -15,7 +15,7 @@ exports.addProduct = async (req, res) => {
     });
   }
 
-  const slug = slugify(`${data?.title}-${Date.now()}`);
+  const slug = slugify(`${data?.title}-${Date.now()}`).toLowerCase();
 
   const product = {
     ...data,
@@ -180,9 +180,10 @@ exports.deleteProductById = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   const id = req?.params?.id;
   const image = req?.file?.filename;
-  const data = req?.body;
+  const { title, description } = req?.body;
+  // console.log(title, description);
 
-  const slug = slugify(`${data?.title}-${Date.now()}`);
+  const slug = slugify(`${title}-${Date.now()}`).toLowerCase();
 
   try {
     const product = await Product.findById(id);
@@ -201,25 +202,30 @@ exports.updateProduct = async (req, res) => {
         }
       });
 
-      const updatedProduct = {
-        ...data,
-        image: image,
-        slug,
-      };
-
-      await Product.findByIdAndUpdate(id, updatedProduct, {
-        new: true,
-      });
+      await Product.findByIdAndUpdate(
+        id,
+        {
+          title,
+          description,
+          image,
+          slug,
+        },
+        {
+          new: true,
+        }
+      );
     } else {
-      const updatedProduct = {
-        ...data,
-        image: product?.image,
-        slug,
-      };
-
-      await Product.findByIdAndUpdate(id, updatedProduct, {
-        new: true,
-      });
+      await Product.findByIdAndUpdate(
+        id,
+        {
+          title,
+          description,
+          slug,
+        },
+        {
+          new: true,
+        }
+      );
     }
 
     res.status(200).json({
