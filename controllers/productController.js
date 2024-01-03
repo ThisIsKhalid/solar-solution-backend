@@ -129,7 +129,10 @@ exports.getProductById = async (req, res) => {
 
 exports.getProductBySlug = async (req, res) => {
   try {
-    const result = await Product.findOne({ slug: req?.params?.slug });
+    const result = await Product.findOne({ slug: req?.params?.slug })
+      .populate("category")
+      .populate("subCategory")
+      .populate("subSubCategory");
 
     if (!result) {
       return res.status(404).json({

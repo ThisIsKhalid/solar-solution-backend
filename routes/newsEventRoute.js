@@ -7,6 +7,7 @@ const {
   getNewsEventById,
   createNewsEvent,
   deleteNewsEventById,
+  getNewsEventsBySlug,
 } = require("../controllers/newsEventController");
 
 const storage = multer.diskStorage({
@@ -24,6 +25,8 @@ router.patch("/update/:id", upload.single("image"), updateNewsEvent);
 router.get("/", getNewsEvents);
 
 router.get("/:id", getNewsEventById);
+
+router.get("/slug/:slug", getNewsEventsBySlug);
 
 router.post("/add", upload.single("image"), createNewsEvent);
 
