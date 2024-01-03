@@ -51,32 +51,39 @@ exports.getAllProducts = async (req, res) => {
   const { page, limit, skip } = calculatePagination(paginationOptions);
 
   try {
-    const andCondition = [];
-
-    if (category) {
-      andCondition.push({ category: category });
-    } else if (subCategory) {
-      andCondition.push({ subCategory: subCategory });
-    } else if (subSubCategory) {
-      andCondition.push({ subSubCategory: subSubCategory });
-    }
-
-    const whereCondition =
-      andCondition.length > 0 ? { $and: andCondition } : {};
-
-    const result = await Product.find(whereCondition)
+    const result = await Product.find()
       .skip(skip)
       .limit(limit)
       .populate("category")
       .populate("subCategory")
       .populate("subSubCategory");
 
-    const total = await Product.countDocuments(whereCondition);
+    let products = result;
+
+    if (category) {
+      products = products.filter(
+        (product) => product?.category?.slug === category
+      );
+    }
+
+    if (subCategory) {
+      products = products.filter(
+        (product) => product?.subCategory?.slug === subCategory
+      );
+    }
+
+    if (subSubCategory) {
+      products = products.filter(
+        (product) => product?.subSubCategory?.slug === subSubCategory
+      );
+    }
+
+    const total = products.length;
 
     res.status(200).json({
       success: true,
       message: "Products fetched successfully",
-      data: result,
+      data: products,
       meta: {
         total,
         page,

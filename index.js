@@ -47,7 +47,7 @@ app.use("/logo", logoRouter);
 app.use("/clientBanner", clientBannerRouter);
 app.use("/clients", clients);
 app.use("/contact", contactRouter);
-app.use("/product", productRouter);
+app.use("/products", productRouter);
 app.use("/careerBanners", careerBannerRouter);
 app.use("/careerForms", careerFormRouter);
 app.use("/news-events", newsEventRouter);
