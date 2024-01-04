@@ -1,4 +1,3 @@
-const verifyAdmin = require("../middleware/verifyAdmin");
 const {
   getContacts,
   addContact,

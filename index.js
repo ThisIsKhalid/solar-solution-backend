@@ -29,6 +29,8 @@ const subCategoryRouter = require("./routes/subCategoriesRoute");
 const subSubCategoryRouter = require("./routes/subSubCategoriesRoute");
 const newsCategoryRouter = require("./routes/newsCategoriesRoute");
 
+const adminRouter = require("./routes/administratorRoute");
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -62,6 +64,8 @@ app.use("/categories", categoryRouter);
 app.use("/sub-categories", subCategoryRouter);
 app.use("/sub-sub-categories", subSubCategoryRouter);
 app.use("/news-category", newsCategoryRouter);
+
+app.use("/admins", adminRouter);
 
 app.get("/", (req, res) => {
   res.send(`Server is Running on port ${port}`);
