@@ -28,7 +28,7 @@ exports.addCategory = async (req, res) => {
 
 exports.getCategories = async (req, res) => {
   try {
-    let categories = await NewsCategories.find({})
+    let categories = await NewsCategories.find({}).sort({ order: 1 });
 
     res.status(200).json({
       success: true,
